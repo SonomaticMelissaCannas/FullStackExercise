@@ -1,29 +1,24 @@
 {
-  "notes": [
+  "persons": [
     {
-      "id": "1",
-      "content": "HTML is easy",
-      "important": false
+      "name": "Arto Hellas",
+      "number": "123",
+      "id": "1"
     },
     {
-      "id": "2",
-      "content": "Browser can execute only JavaScript",
-      "important": true
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": "2"
     },
     {
-      "id": "3",
-      "content": "GET and POST are the most important methods of HTTP protocol",
-      "important": true
+      "name": "Dan Abramov",
+      "number": "12-43-234345",
+      "id": "3"
     },
     {
-      "content": "a new note...",
-      "important": false,
-      "id": "oUbI5E7mbaI"
-    },
-    {
-      "content": "a new note 2",
-      "important": true,
-      "id": "74M4vCphjrA"
+      "name": "Melissa",
+      "number": "075895366687",
+      "id": "uECRsgwuTNo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
