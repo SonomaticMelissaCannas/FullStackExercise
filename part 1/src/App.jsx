@@ -28,12 +28,14 @@
 /* import { useState, useEffect } from 'react'
 import Note from './components/Note'
 import noteService from './services/notes'
-
+import Notification from './components/Notification'
+import Footer from './components/Footer'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
-
+  const [errorMessage, setErrorMessage] = useState('some error happened')
+   
   useEffect(() => {
     noteService.getAll().then((initialNotes) => {
       setNotes(initialNotes)
@@ -62,8 +64,11 @@ const App = () => {
       .then((returnedNote) => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)))
       })
-      .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`)
+      .catch(() => {
+        setErrorMessage(`Note: ${note.content} was already removed from server`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         setNotes(notes.filter((n) => n.id !== id))
       })
   }
@@ -77,6 +82,7 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage}/>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
@@ -95,18 +101,21 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
       </form>
+      <Footer />
     </div>
   )
 }
 
-export default App */
+export default App  */
  
 // EXERCISES 2.6
- import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import phonebookService from './services/phonebook'
 import Person from './components/Person.jsx'
 import PersonForm from './components/PersonForm.jsx'
+import Notification from './components/Notification'
 const App = () => {
+  const [errorMessage, setErrorMessage] = useState(null)
   const [newName, setNewName] = useState('')
   const [allPersons, setAllPersons] = useState([])
   const [newNumber, setNewNumber] = useState('')
@@ -141,9 +150,19 @@ const App = () => {
           ))
           setNewName('')
           setNewNumber('')
+          setErrorMessage(`Updated ${newName}'s number successfully`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
         .catch(error => {
           console.error('Error updating person:', error)
+          setNewName('')
+          setNewNumber('')
+          setErrorMessage(`Information of ${newName} has already been removed from server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
       }
       return
@@ -158,6 +177,10 @@ const App = () => {
         setAllPersons(allPersons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setErrorMessage(`Added ${newName} successfully`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
       .catch(error => {
         console.error('Error creating new person:', error)
@@ -185,6 +208,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {errorMessage && <Notification message={errorMessage} />}
         <div>
           name: <input value={filter} onChange={handleFilter} />
         </div>
@@ -206,4 +230,4 @@ const App = () => {
   )
 }
 
-export default App 
+export default App
